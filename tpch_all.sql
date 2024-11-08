@@ -33,76 +33,8 @@ SELECT 'supplier  ' as table_name, count(*) as count_of_rows
 from supplier s  ) as t
 ORDER BY count_of_rows desc;
 
-ANALYZE FULL TABLE customer;
-ANALYZE FULL TABLE lineitem;
-ANALYZE FULL TABLE nation;
-ANALYZE FULL TABLE orders;
-ANALYZE FULL TABLE part;
-ANALYZE FULL TABLE partsupp;
-ANALYZE FULL TABLE region;
-ANALYZE FULL TABLE supplier;
 
-ALTER SESSION SET USE_CACHED_RESULT = FALSE;
-
- SELECT * FROM information_schema.COLUMNS 
-WHERE TABLE_SCHEMA='_statistics_' ORDER BY ORDINAL_POSITION;
-
-SET catalog hive_catalog_hms;
-use tpcds100gb;
-set catalog default_catalog;
-use tpch;
-DESCRIBE lineitem2 ;
-
-CREATE TABLE lineitem7 (
-                             l_linenumber  int not null,
-                             l_partkey     int NOT NULL,
-                             l_suppkey     int not null,
-                             l_quantity    decimal(15, 2) NOT NULL,
-                             l_extendedprice  decimal(15, 2) NOT NULL,
-                             l_discount    decimal(15, 2) NOT NULL,
-                             l_tax         decimal(15, 2) NOT NULL,
-                             l_returnflag  VARCHAR(1) NOT NULL,
-                             l_linestatus  VARCHAR(1) NOT NULL,
-                             l_commitdate  DATE NOT NULL,
-                             l_receiptdate DATE NOT NULL,
-                             l_shipinstruct VARCHAR(25) NOT NULL,
-                             l_shipmode     VARCHAR(10) NOT NULL,
-                             l_comment      VARCHAR(44) NOT NULL,
-                               l_shipdate    DATE NOT NULL ,l_orderkey    int NOT NULL 
-                              )
-ENGINE=hive 
--- DUPLICATE KEY(`l_shipdate`, `l_orderkey`)
-PARTITION  BY (l_orderkey);
-
-
-INSERT INTO hive_catalog_hms.tpcds100gb.lineitem7
-SELECT * FROM default_catalog.tpch.lineitem   limit 1;
-
-SWITCH iceberg_s3;
-SHOW DATABASES from iceberg_s3;
-use tpch;
-
--- explain analyze
-select sum(l_orderkey), count(*) from lineitem where
-l_comment like 'slyly %' or
-l_comment like 'plant %' or
-l_comment like 'fina %' or
-l_comment like 'quick %' or
-l_comment like 'slyly %' or
-l_comment like 'quickly %' or
-l_comment like ' %about%' or
-l_comment like ' final%' or
-l_comment like ' %final%' or
-l_comment like ' breach%' or
-l_comment like ' egular%' or
-l_comment like ' %closely%' or
-l_comment like ' closely%' or
-l_comment like ' %idea%' or
-l_comment like ' idea%' ; 
-
-CREATE table tpch_100gb.nation as select * from tpch.nation;
-
-drop table nation;
+-- tpch queries 21 
 --Q1
 select
   l_returnflag,
