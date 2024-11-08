@@ -1,13 +1,4 @@
 
-ANALYZE FULL TABLE customer;
-ANALYZE FULL TABLE lineitem;
-ANALYZE FULL TABLE nation;
-ANALYZE FULL TABLE orders;
-ANALYZE FULL TABLE part;
-ANALYZE FULL TABLE partsupp;
-ANALYZE FULL TABLE region;
-ANALYZE FULL TABLE supplier;
- 
 
 -- ------------------------------------------------------------
 
